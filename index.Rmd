@@ -14,12 +14,15 @@ knitr::opts_chunk$set(echo = FALSE)
     + Días bisiestos
     + Horarios de verano
 
-```{r, echo = TRUE}
+```{r, echo = TRUE, comment=FALSE, warning=FALSE, message=FALSE}
 # install.packages("lubridate")
 library(lubridate)
 ```
 ##
-<img src="imagen.png" style="background-color:transparent; border:0px; box-shadow:none;"></img>
+```{r  out.width = "100%", echo=FALSE}
+library(knitr)
+include_graphics("images/imagen.png") 
+```
 
 ## Funciones
 - Funciones más intuitivas que las de la base (incluyendo `chron`, `timeDate`, `zoo`, `xts`, `its`, `tis`, `timeSeries`, `fts`, y `tseries`) 
@@ -41,12 +44,12 @@ ymd("20110604")
 ```
 
 **Mes - Día - Año**
-```{r, echo=TRUE}
+```{r, echo=TRUE, warning=FALSE}
 mdy("06-04-2011")
 ```
 
 **Día - Mes - Año**
-```{r, echo=TRUE}
+```{r, echo=TRUE, warning=FALSE}
 dmy("04/06/2011")
 ```
 
@@ -56,7 +59,7 @@ Si el objeto que está manipulando contiene información horaria, puede agregars
 
 Para leer tiempos de cierta zona horaria, debe suministrarse el nombre oficial de esa zona horaria con el argumento `tz`. 
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, warning=FALSE}
 (arrive <- ymd_hms("2011-06-04 12:00:00", tz = "Pacific/Auckland"))
 (leave <- ymd_hms("2011-08-10 14:00:00", tz = "Pacific/Auckland"))
 
@@ -85,14 +88,14 @@ Hay dos cosas muy útiles para hacer con el huso horario.
 
 Por ejemplo, hace poco estuve en Auckland, Nueva Zelanda. Acordé una reunión con un amigo a las 9:00 a.m., hora de Auckland. ¿Qué hora era para mi amigo si él estaba en Houston, TX?
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, warning=FALSE}
 meeting <- ymd_hms("2011-07-01 09:00:00", tz = "Pacific/Auckland")
 with_tz(meeting, "America/Chicago")
 ```
 
 Así que la reunión se llevó a cabo a las 4:00 p.m. del día anterior para mi amigo por la curvatura de la tierra. Y si mi amigo hubiera cometido un error y hubiera sido a las 9:00 a.m. de su huso horario, ¿qué hora hubiera sido para mi?
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, warning=FALSE}
 mistake <- force_tz(meeting, "America/Chicago")
 with_tz(mistake, "Pacific/Auckland")
 ```
@@ -103,24 +106,24 @@ with_tz(mistake, "Pacific/Auckland")
 
 Puede guardar un intervalo de tiempo como un objeto de clase *Intervalo* con `lubridate`. Por ejemplo, mi estadía en Auckland duró desde el 4 de junio de 2011 al 10 de agosto de 2011 (información almacenada en `arrive` y `leave`). Puede crearse un intervalo con estos dos tiempos de dos formas:
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, warning=FALSE}
 (auckland <- interval(arrive, leave))
 (auckland <- arrive %--% leave)
 ```
 
 Por ejemplo, si una amiga viajó fuera del país desde el 20 de julio hasta finales de agosto, ¿mi visita se cruzará con sus viajes?
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, warning=FALSE}
 (jsm <- interval(ymd(20110720, tz = "Pacific/Auckland"), ymd(20110831, tz = "Pacific/Auckland")))
 ```
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, warning=FALSE}
 int_overlaps(jsm, auckland)
 ```
 
 ##
 ¿En qué parte de mi visita, podremos coincidir?
-```{r, echo=TRUE}
+```{r, echo=TRUE, warning=FALSE}
 setdiff(auckland, jsm)
 ```
 
@@ -131,7 +134,7 @@ Otras funciones que trabajan bien con intervalos incluyen: `int_start`, `int_end
 ##
 Los intervalos son periodos de tiempo específicos, sin embargo `lubridate` también provee dos clases de periodos de tiempo: Duraciones y Periodos. Las funciones auxiliares para crear periodos, deben invocarse después de las unidades de tiempo (en plural). Las funciones auxiliares para crear duraciones siguen el mismo formato pero comienzan con una "d" (por duración) o "e" (por exacto)
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, warning=FALSE}
 minutes(2) ## period
 dminutes(2) ## duration
 ```
@@ -148,13 +151,13 @@ Porque la línea del tiempo no es tan confiable como la recta numérica.
 
 Por ejemplo, las *duraciones* serán precisas al enfrentarse con años bisiestos, sin embargo los *periodos* retornan lo que intuitivamente se pretende:
 
-```{r, echo=TRUE, collapse=TRUE}
+```{r, echo=TRUE, collapse=TRUE, warning=FALSE}
 leap_year(2011) ## regular year
 ymd(20110101) + dyears(1)
 ymd(20110101) + years(1)
 ```
 
-```{r, echo=TRUE, collapse=TRUE}
+```{r, echo=TRUE, collapse=TRUE, warning=FALSE}
 leap_year(2012) ## leap year
 ymd(20120101) + dyears(1)
 ymd(20120101) + years(1)
@@ -164,18 +167,18 @@ ymd(20120101) + years(1)
 
 Puede usar *periodos* y *duraciones* para realizar operaciones aritméticas básicas con objetos del tiempo.  Por ejemplo, si quisiera establecer una reunión semanal con mi amigo, sería:
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, warning=FALSE}
 (meetings <- meeting + weeks(0:5))
 ```
 
 Si mi amigo y mi amiga viajaron al mismo tiempo, ¿cuál de las reuniones se verían afectadas? Las últimas dos.
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, warning=FALSE}
 meetings %within% jsm
 ```
 
 ¿Cuánto duró mi estadía en Auckland?
-```{r,echo=TRUE, collapse=TRUE}
+```{r,echo=TRUE, collapse=TRUE, warning=FALSE}
 auckland / ddays(1)
 auckland / dminutes(1)
 ```
@@ -183,7 +186,7 @@ auckland / dminutes(1)
 ##
 También es posible realizar operación módulo y división entera. Algunas veces es más sensible que la división normal puesto que no es tan obvio expresar un residuo como una fracción de un mes porque la longitud de los meses cambia constantemente.
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, warning=FALSE}
 auckland %/% months(1)
 auckland %% months(1)
 ```
@@ -191,7 +194,7 @@ auckland %% months(1)
 
 Módulo con un intervalo de tiempo devuelve el residuo como un nuevo intervalo (más pequeño). Puede cambiarlo a cualquier intervalo en un lapso de tiempo generalizado con `as.period`.
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, warning=FALSE}
 as.period(auckland %% months(1))
 as.period(auckland)
 ```
@@ -214,7 +217,7 @@ Una propiedad básica de la aritmética  es que `a + b - b = a`. Únicamente la 
 
 Sin embargo es posible conseguir los resultados 2 y 3 con aritmética inteligente o usando los operadores especiales `%m+%` y `%m-%`. Estos automáticamente se remontarán al último día del mes, de ser necesario.
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, warning=FALSE}
 jan31 <- ymd("2013-01-31")
 jan31 + months(0:11)
 floor_date(jan31, "month") + months(0:11) + days(31)
