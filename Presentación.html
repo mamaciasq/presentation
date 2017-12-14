@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>lubridate</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: '<code>lubridate</code>',
+                        useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                        favIcon: 'Presentación_files/logo.png',
+              },
+
+      // Author information
+      presenters: [
+            ]
+    };
+  </script>
+
+  <link href="libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="libs/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+  <script src="libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="libs/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="libs/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="libs/ioslides-13.5.1/js/slide-deck.js"></script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+
+    slides > slide:not(.nobackground):before {
+      font-size: 12pt;
+      content: "";
+      position: absolute;
+      bottom: 20px;
+      left: 60px;
+      background: url(Presentación_files/logo.png) no-repeat 0 50%;
+      -webkit-background-size: 30px 30px;
+      -moz-background-size: 30px 30px;
+      -o-background-size: 30px 30px;
+      background-size: 30px 30px;
+      padding-left: 40px;
+      height: 30px;
+      line-height: 1.9;
+    }
+  </style>
+
+  <link rel="stylesheet" href="styles.css" type="text/css" />
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="Presentacio%CC%81n_files/logo.png"></aside>
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+          </hgroup>
+  </slide>
+
+<slide class=""><hgroup><h2>Características generales</h2></hgroup><article  id="caracteristicas-generales">
+
+<ul class = 'build'>
+<li>Facilita el manejo de fechas y horas en <code>R</code>.</li>
+<li>Robustece la manipulación de:
+
+<ul class = 'build'>
+<li>Zonas horarias</li>
+<li>Días bisiestos</li>
+<li>Horarios de verano</li>
+</ul></li>
+</ul>
+
+<pre class = 'prettyprint lang-r'># install.packages(&quot;lubridate&quot;)
+library(lubridate)</pre>
+
+<pre >## 
+## Attaching package: &#39;lubridate&#39;</pre>
+
+<pre >## The following object is masked from &#39;package:base&#39;:
+## 
+##     date</pre>
+
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section">
+
+<p><img src="imagen.png" style="background-color:transparent; border:0px; box-shadow:none;"></img></p>
+
+</article></slide><slide class=""><hgroup><h2>Funciones</h2></hgroup><article  id="funciones">
+
+<ul class = 'build'>
+<li>Funciones más intuitivas que las de la base (incluyendo <code>chron</code>, <code>timeDate</code>, <code>zoo</code>, <code>xts</code>, <code>its</code>, <code>tis</code>, <code>timeSeries</code>, <code>fts</code>, y <code>tseries</code>)</li>
+<li>Analiza rápidamente tiempos: <code>ymd()</code>, <code>dmy()</code>, <code>myd()</code>, &#8230;</li>
+<li>Funciones que extraen y modifican componentes de tiempo (años, meses, días, horas, minutos y segundos): <code>year()</code>, <code>month()</code>, <code>day()</code>, &#8230;</li>
+<li>Ayuda con la manipulación de zonas horarias: <code>with_tz()</code>, <code>force_tz()</code></li>
+<li>Opera matemáticamente objetos del tiempo.
+
+<ul class = 'build'>
+<li>Duraciones: mide la cantidad exacta de tiempo entre dos puntos del tiempo</li>
+<li>Periodos: hace seguimiento preciso de los tiempos a pesar de tener años bisiestos, segundos intercalares, y horarios de verano.</li>
+<li>Intervalos: resumen completo de información del tiempo entre dos puntos</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Analizando fechas y horas</h2></hgroup><article  id="analizando-fechas-y-horas">
+
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-1">
+
+<p><strong>Año - Mes - Día</strong></p>
+
+<pre class = 'prettyprint lang-r'>ymd(&quot;20110604&quot;)</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## [1] &quot;2011-06-04&quot;</pre>
+
+<p><strong>Mes - Día - Año</strong></p>
+
+<pre class = 'prettyprint lang-r'>mdy(&quot;06-04-2011&quot;)</pre>
+
+<pre >## [1] &quot;2011-06-04&quot;</pre>
+
+<p><strong>Día - Mes - Año</strong></p>
+
+<pre class = 'prettyprint lang-r'>dmy(&quot;04/06/2011&quot;)</pre>
+
+<pre >## [1] &quot;2011-06-04&quot;</pre>
+
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-2">
+
+<p>Si el objeto que está manipulando contiene información horaria, puede agregarse h, m o s al nombre de la función. Probablemente <code>ymd_hms</code> es el formato de tiempo más utilizado.</p>
+
+<p>Para leer tiempos de cierta zona horaria, debe suministrarse el nombre oficial de esa zona horaria con el argumento <code>tz</code>.</p>
+
+<pre class = 'prettyprint lang-r'>(arrive &lt;- ymd_hms(&quot;2011-06-04 12:00:00&quot;, tz = &quot;Pacific/Auckland&quot;))</pre>
+
+<pre >## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## [1] &quot;2011-06-04 12:00:00 NZST&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>(leave &lt;- ymd_hms(&quot;2011-08-10 14:00:00&quot;, tz = &quot;Pacific/Auckland&quot;))</pre>
+
+<pre >## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## [1] &quot;2011-08-10 14:00:00 NZST&quot;</pre>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Ajustando y extrayendo información</h2></hgroup><article  id="ajustando-y-extrayendo-informacion">
+
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-3">
+
+<p>Puede extraerse información sobre el tiempo con las funciones: <code>second</code>, <code>minute</code>, <code>hour</code>, <code>day</code>, <code>wday</code>, <code>yday</code>, <code>week</code>, <code>month</code>, <code>year</code>, y <code>tz</code>. Estas funciones también sirven para ajustar la información dada. <code>wday</code> y <code>month</code> tienen un argumento opcional llamado <code>label</code>, el cual reemplaza su salida numérica con el nombre del día de la semana o del mes.</p>
+
+<pre class = 'prettyprint lang-r'>second(arrive)
+## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+## Warning in as.POSIXlt.POSIXct(x, tz = tz(x)): unknown timezone &#39;zone/tz/
+## 2017c.1.0/zoneinfo/America/Bogota&#39;
+## [1] 0
+second(arrive) &lt;- 25; arrive
+## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+
+## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+## Warning in as.POSIXlt.POSIXct(date): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+## Warning in as.POSIXct.POSIXlt(new): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+## Warning in as.POSIXlt.POSIXct(x, tz): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+## [1] &quot;2011-06-04 12:00:25 NZST&quot;
+second(arrive) &lt;- 0
+## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+## Warning in as.POSIXlt.POSIXct(x, tz = tz(x)): unknown timezone &#39;zone/tz/
+## 2017c.1.0/zoneinfo/America/Bogota&#39;
+## Warning in as.POSIXlt.POSIXct(date): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+## Warning in as.POSIXct.POSIXlt(new): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+wday(arrive)
+## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+## Warning in as.POSIXlt.POSIXct(x, tz = tz(x)): unknown timezone &#39;zone/tz/
+## 2017c.1.0/zoneinfo/America/Bogota&#39;
+## [1] 7
+wday(arrive, label = TRUE)
+## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+
+## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+## [1] Sat
+## Levels: Sun &lt; Mon &lt; Tues &lt; Wed &lt; Thurs &lt; Fri &lt; Sat</pre>
+
+</article></slide><slide class=""><hgroup><h2>Zonas horarias</h2></hgroup><article  id="zonas-horarias">
+
+<p>Hay dos cosas muy útiles para hacer con el huso horario.</p>
+
+<ul class = 'build'>
+<li>Mostrar el mismo momento en distintos husos horarios.</li>
+<li>Crear un momento combinando una hora existente con una nueva. Esto se realiza con las funciones <code>with_tz</code> y <code>force_tz</code>.</li>
+</ul>
+
+<p>Por ejemplo, hace poco estuve en Auckland, Nueva Zelanda. Acordé una reunión con un amigo a las 9:00 a.m., hora de Auckland. ¿Qué hora era para mi amigo si él estaba en Houston, TX?</p>
+
+<pre class = 'prettyprint lang-r'>meeting &lt;- ymd_hms(&quot;2011-07-01 09:00:00&quot;, tz = &quot;Pacific/Auckland&quot;)</pre>
+
+<pre >## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre class = 'prettyprint lang-r'>with_tz(meeting, &quot;America/Chicago&quot;)</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## [1] &quot;2011-06-30 16:00:00 CDT&quot;</pre>
+
+<p>Así que la reunión se llevó a cabo a las 4:00 p.m. del día anterior para mi amigo por la curvatura de la tierra. Y si mi amigo hubiera cometido un error y hubiera sido a las 9:00 a.m. de su huso horario, ¿qué hora hubiera sido para mi?</p>
+
+<pre class = 'prettyprint lang-r'>mistake &lt;- force_tz(meeting, &quot;America/Chicago&quot;)</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(object): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXct.POSIXlt(dlt): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(dct): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre class = 'prettyprint lang-r'>with_tz(mistake, &quot;Pacific/Auckland&quot;)</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## [1] &quot;2011-07-02 02:00:00 NZST&quot;</pre>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Intervalos de tiempo</h2></hgroup><article  id="intervalos-de-tiempo">
+
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-4">
+
+<p>Puede guardar un intervalo de tiempo como un objeto de clase <em>Intervalo</em> con <code>lubridate</code>. Por ejemplo, mi estadía en Auckland duró desde el 4 de junio de 2011 al 10 de agosto de 2011 (información almacenada en <code>arrive</code> y <code>leave</code>). Puede crearse un intervalo con estos dos tiempos de dos formas:</p>
+
+<pre class = 'prettyprint lang-r'>(auckland &lt;- interval(arrive, leave))</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+
+## Warning in as.POSIXlt.POSIXct(x, tz): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## [1] 2011-06-04 12:00:00 NZST--2011-08-10 14:00:00 NZST</pre>
+
+<pre class = 'prettyprint lang-r'>(auckland &lt;- arrive %--% leave)</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+
+## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+
+## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## [1] 2011-06-04 12:00:00 NZST--2011-08-10 14:00:00 NZST</pre>
+
+<p>Por ejemplo, si una amiga viajó fuera del país desde el 20 de julio hasta finales de agosto, ¿mi visita se cruzará con sus viajes?</p>
+
+<pre class = 'prettyprint lang-r'>(jsm &lt;- interval(ymd(20110720, tz = &quot;Pacific/Auckland&quot;), ymd(20110831, tz = &quot;Pacific/Auckland&quot;)))</pre>
+
+<pre >## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+
+## Warning in as.POSIXlt.POSIXct(x, tz): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## [1] 2011-07-20 NZST--2011-08-31 NZST</pre>
+
+<pre class = 'prettyprint lang-r'>int_overlaps(jsm, auckland)</pre>
+
+<pre >## [1] TRUE</pre>
+
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-5">
+
+<p>¿En qué parte de mi visita, podremos coincidir?</p>
+
+<pre class = 'prettyprint lang-r'>setdiff(auckland, jsm)</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+
+## Warning in as.POSIXlt.POSIXct(x, tz): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## [1] 2011-06-04 12:00:00 NZST--2011-07-20 NZST</pre>
+
+<p>Otras funciones que trabajan bien con intervalos incluyen: <code>int_start</code>, <code>int_end</code>, <code>int_flip</code>, <code>int_shift</code>, <code>int_aligns</code>, <code>union</code>, <code>intersect</code>, <code>setdiff</code>, y <code>%within%</code>.</p>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Aritmética sobre objetos en el tiempo</h2></hgroup><article  id="aritmetica-sobre-objetos-en-el-tiempo">
+
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-6">
+
+<p>Los intervalos son periodos de tiempo específicos, sin embargo <code>lubridate</code> también provee dos clases de periodos de tiempo: Duraciones y Periodos. Las funciones auxiliares para crear periodos, deben invocarse después de las unidades de tiempo (en plural). Las funciones auxiliares para crear duraciones siguen el mismo formato pero comienzan con una &quot;d&quot; (por duración) o &quot;e&quot; (por exacto)</p>
+
+<pre class = 'prettyprint lang-r'>minutes(2) ## period</pre>
+
+<pre >## [1] &quot;2M 0S&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>dminutes(2) ## duration</pre>
+
+<pre >## [1] &quot;120s (~2 minutes)&quot;</pre>
+
+<p><strong>¿Por qué dos clases?</strong></p>
+
+<p>Porque la línea del tiempo no es tan confiable como la recta numérica.</p>
+
+<ul class = 'build'>
+<li><p>La clase <em>Duración</em> siempre suministrará resultados matemáticamente precisos. La duración de un año siempre será igual a 365 días.</p></li>
+<li><p>Los <em>Periodos</em> fluctúan de la misma manera que lo hace la línea del tiempo. Esto los hace útiles para el modelado de las horas del reloj.</p></li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-7">
+
+<p>Por ejemplo, las <em>duraciones</em> serán precisas al enfrentarse con años bisiestos, sin embargo los <em>periodos</em> retornan lo que intuitivamente se pretende:</p>
+
+<pre class = 'prettyprint lang-r'>leap_year(2011) ## regular year
+## [1] FALSE
+ymd(20110101) + dyears(1)
+## [1] &quot;2012-01-01&quot;
+ymd(20110101) + years(1)
+## [1] &quot;2012-01-01&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>leap_year(2012) ## leap year
+## [1] TRUE
+ymd(20120101) + dyears(1)
+## [1] &quot;2012-12-31&quot;
+ymd(20120101) + years(1)
+## [1] &quot;2013-01-01&quot;</pre>
+
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-8">
+
+<p>Puede usar <em>periodos</em> y <em>duraciones</em> para realizar operaciones aritméticas básicas con objetos del tiempo. Por ejemplo, si quisiera establecer una reunión semanal con mi amigo, sería:</p>
+
+<pre class = 'prettyprint lang-r'>(meetings &lt;- meeting + weeks(0:5))</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(date): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXct.POSIXlt(new): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## [1] &quot;2011-07-01 09:00:00 NZST&quot; &quot;2011-07-08 09:00:00 NZST&quot;
+## [3] &quot;2011-07-15 09:00:00 NZST&quot; &quot;2011-07-22 09:00:00 NZST&quot;
+## [5] &quot;2011-07-29 09:00:00 NZST&quot; &quot;2011-08-05 09:00:00 NZST&quot;</pre>
+
+<p>Si mi amigo y mi amiga viajaron al mismo tiempo, ¿cuál de las reuniones se verían afectadas? Las últimas dos.</p>
+
+<pre class = 'prettyprint lang-r'>meetings %within% jsm</pre>
+
+<pre >## [1] FALSE FALSE FALSE  TRUE  TRUE  TRUE</pre>
+
+<p>¿Cuánto duró mi estadía en Auckland?</p>
+
+<pre class = 'prettyprint lang-r'>auckland / ddays(1)
+## [1] 67.08333
+auckland / dminutes(1)
+## [1] 96600</pre>
+
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-9">
+
+<p>También es posible realizar operación módulo y división entera. Algunas veces es más sensible que la división normal puesto que no es tan obvio expresar un residuo como una fracción de un mes porque la longitud de los meses cambia constantemente.</p>
+
+<pre class = 'prettyprint lang-r'>auckland %/% months(1)</pre>
+
+<pre >## Note: method with signature &#39;Timespan#Timespan&#39; chosen for function &#39;%/%&#39;,
+##  target signature &#39;Interval#Period&#39;.
+##  &quot;Interval#ANY&quot;, &quot;ANY#Period&quot; would also be valid</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(object): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz = tz(x)): unknown timezone &#39;zone/tz/
+## 2017c.1.0/zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz = tz(x)): unknown timezone &#39;zone/tz/
+## 2017c.1.0/zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(object): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz = tz(x)): unknown timezone &#39;zone/tz/
+## 2017c.1.0/zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz = tz(x)): unknown timezone &#39;zone/tz/
+## 2017c.1.0/zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## [1] 2</pre>
+
+<pre class = 'prettyprint lang-r'>auckland %% months(1)</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(object): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz = tz(x)): unknown timezone &#39;zone/tz/
+## 2017c.1.0/zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz = tz(x)): unknown timezone &#39;zone/tz/
+## 2017c.1.0/zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(object): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz = tz(x)): unknown timezone &#39;zone/tz/
+## 2017c.1.0/zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz = tz(x)): unknown timezone &#39;zone/tz/
+## 2017c.1.0/zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(date): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXct.POSIXlt(new): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;
+
+## Warning in as.POSIXlt.POSIXct(x, tz): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## [1] 2011-08-04 12:00:00 NZST--2011-08-10 14:00:00 NZST</pre>
+
+<p>Módulo con un intervalo de tiempo devuelve el residuo como un nuevo intervalo (más pequeño). Puede cambiarlo a cualquier intervalo en un lapso de tiempo generalizado con <code>as.period</code>.</p>
+
+<pre class = 'prettyprint lang-r'>as.period(auckland %% months(1))</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(object): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz = tz(x)): unknown timezone &#39;zone/tz/
+## 2017c.1.0/zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz = tz(x)): unknown timezone &#39;zone/tz/
+## 2017c.1.0/zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(object): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz = tz(x)): unknown timezone &#39;zone/tz/
+## 2017c.1.0/zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x, tz = tz(x)): unknown timezone &#39;zone/tz/
+## 2017c.1.0/zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(date): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXct.POSIXlt(lt): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(ct): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXct.POSIXlt(new): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x@start): unknown timezone &#39;zone/tz/2017c.
+## 1.0/zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXct.POSIXlt(e1): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(start + x@.Data): unknown timezone &#39;zone/tz/
+## 2017c.1.0/zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## [1] &quot;6d 2H 0M 0S&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>as.period(auckland)</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(x@start): unknown timezone &#39;zone/tz/2017c.
+## 1.0/zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXct.POSIXlt(e1): unknown timezone &#39;zone/tz/2017c.1.0/
+## zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## Warning in as.POSIXlt.POSIXct(start + x@.Data): unknown timezone &#39;zone/tz/
+## 2017c.1.0/zoneinfo/America/Bogota&#39;</pre>
+
+<pre >## [1] &quot;2m 6d 2H 0M 0S&quot;</pre>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Si alguien condujera una máquina del tiempo, se estrellaría</h2></hgroup><article  id="si-alguien-condujera-una-maquina-del-tiempo-se-estrellaria">
+
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-10">
+
+<p>La longitud de los meses y años cambia constantemente, de tal suerte que hacer operaciones aritméticas no sería tan intuitivo.</p>
+
+<p>Considere una operación simple, <code>January 31st + one month</code>. La respuesta debería ser:</p>
+
+<ol class = 'build'>
+<li><code>February 31st</code> (no existe)</li>
+<li><code>March 4th</code> (31 días después de Enero 31), o</li>
+<li><code>February 28th</code> (asumiendo que no sea un año bisiesto)</li>
+</ol>
+
+<p>Una propiedad básica de la aritmética es que <code>a + b - b = a</code>. Únicamente la solución 1 obedece a esta propiedad pero es una fecha inválida. <code>lubridate</code> es tan consistente como puede ser posible al invocar la siguiente regla: <em>si al adherir o sustraer un mes o un año, se obtiene un tiempo inválido, <code>lubridate</code> retornará un NA</em></p>
+
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-11">
+
+<p>Sin embargo es posible conseguir los resultados 2 y 3 con aritmética inteligente o usando los operadores especiales <code>%m+%</code> y <code>%m-%</code>. Estos automáticamente se remontarán al último día del mes, de ser necesario.</p>
+
+<pre class = 'prettyprint lang-r'>jan31 &lt;- ymd(&quot;2013-01-31&quot;)
+jan31 + months(0:11)</pre>
+
+<pre >##  [1] &quot;2013-01-31&quot; NA           &quot;2013-03-31&quot; NA           &quot;2013-05-31&quot;
+##  [6] NA           &quot;2013-07-31&quot; &quot;2013-08-31&quot; NA           &quot;2013-10-31&quot;
+## [11] NA           &quot;2013-12-31&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>floor_date(jan31, &quot;month&quot;) + months(0:11) + days(31)</pre>
+
+<pre >##  [1] &quot;2013-02-01&quot; &quot;2013-03-04&quot; &quot;2013-04-01&quot; &quot;2013-05-02&quot; &quot;2013-06-01&quot;
+##  [6] &quot;2013-07-02&quot; &quot;2013-08-01&quot; &quot;2013-09-01&quot; &quot;2013-10-02&quot; &quot;2013-11-01&quot;
+## [11] &quot;2013-12-02&quot; &quot;2014-01-01&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>jan31 %m+% months(0:11)</pre>
+
+<pre >##  [1] &quot;2013-01-31&quot; &quot;2013-02-28&quot; &quot;2013-03-31&quot; &quot;2013-04-30&quot; &quot;2013-05-31&quot;
+##  [6] &quot;2013-06-30&quot; &quot;2013-07-31&quot; &quot;2013-08-31&quot; &quot;2013-09-30&quot; &quot;2013-10-31&quot;
+## [11] &quot;2013-11-30&quot; &quot;2013-12-31&quot;</pre>
+
+<p>Esto sólo afectará a la aritmética con meses (y con los años si la fecha de inicio es Feb 29).</p></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>
